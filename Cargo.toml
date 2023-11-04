@@ -6,4 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ca-formats = "0.3.5"
 rand = "0.8.5"
+rle = "0.2.0"

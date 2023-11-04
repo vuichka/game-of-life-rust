@@ -1,4 +1,4 @@
-const ALIVE_SYM: &str = "#";
+const ALIVE_SYM: &str = "•";
 const DEAD_SYM: &str = ".";
 
 #[derive(Debug)]
@@ -23,7 +23,7 @@ impl World {
         for row in self.cells.iter_mut() {
             for v in row {
                 let r = rand::random::<u8>();
-                if r < 7 {
+                if r < 30 {
                     *v = true;
                 } else {
                     *v = false;
@@ -37,60 +37,10 @@ impl World {
         self.cells[x][y] = alive;
     }
 
-    pub fn spawn_glider(&mut self, x: usize, y: usize) {
-        let glider: Vec<Vec<bool>> = vec![
-            vec![false, false, true],
-            vec![true, false, true],
-            vec![false, true, true],
-        ];
-
-        for i in -1..=1 as i32 {
-            for k in -1..=1 as i32 {
-                let (mut rx, mut ry): (i32, i32) = (x as i32 + i, y as i32 + k);
-                if rx < 0 {
-                    rx = self.height as i32 + rx;
-                }
-                if ry < 0 {
-                    ry = self.width as i32 + ry;
-                }
-                let rx: usize = (rx % self.height as i32) as usize;
-                let ry: usize = (ry % self.width as i32) as usize;
-                self.cells[rx][ry] = glider[(i + 1) as usize][(k + 1) as usize];
-            }
-        }
-    }
-
-    pub fn spawn_block(&mut self, x: usize, y: usize) {
-        for r in 0..=1 {
-            for i in 0..=1 {
-                self.cells[x + r][y + i] = true;
-            }
-        }
-    }
-
-    pub fn spawn_diamond(&mut self, x: usize, y: usize) {
-        for r in 0..=1 {
-            for i in 0..=1 {
-                if r == 1 && i == 1 {
-                    self.cells[x + r][y + i] = false;
-                }
-                self.cells[x + r][y + i] = true;
-            }
-        }
-        for r in 0..=1 {
-            for i in 0..=1 {
-                if r == 0 && i == 0 {
-                    self.cells[x + 2 + r][y + 2 + i] = false;
-                }
-                self.cells[x + 2 + r][y + 2 + i] = true;
-            }
-        }
-    }
-
     pub fn print_world(&self) {
         for row in 0..self.height {
-            for i in 0..self.width {
-                match self.cells[row][i] {
+            for e in 0..self.width {
+                match self.cells[row][e] {
                     false => print!("\x1b[1;47m{}", DEAD_SYM),
                     true => print!("\x1b[97;102m{}", ALIVE_SYM),
                 }
@@ -110,7 +60,7 @@ impl World {
         self.cells = new.cells;
     }
 
-    pub fn next(&self, x: usize, y: usize) -> bool {
+    fn next(&self, x: usize, y: usize) -> bool {
         let nb = self.neighbours(x, y);
         let alive = self.cells[x][y];
 
@@ -124,7 +74,7 @@ impl World {
         false
     }
 
-    pub fn neighbours(&self, x: usize, y: usize) -> i32 {
+    fn neighbours(&self, x: usize, y: usize) -> i32 {
         let mut neighbours = 0;
 
         for i in -1..=1 as i32 {
