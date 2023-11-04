@@ -1,6 +1,6 @@
 # Game Of Life Rust - учебный проект на Rust
 
-[In English]("/README.md") | [На Русском]("ruREADME.md")
+[In English](/README.md) | [На Русском](ruREADME.md)
 
 Мне удалось создать игру, изучая язык Rust. Вы можете проверить, что у меня получилось после пары дней работы.
 
