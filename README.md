@@ -6,17 +6,17 @@ I managed to build a game while learning several programming languages, one of t
 
 ## Usage 
 
-1. If you don't have Rust Programming Language install, please go [here](https://www.rust-lang.org/tools/install) and install it, or use this if you’re running **macOS**, **Linux**, or another **Unix-like OS**:
+0. If you don't have Rust Programming Language installed, please go [here](https://www.rust-lang.org/tools/install) and install it, or use this if you’re running **macOS**, **Linux**, or another **Unix-like OS**:
 ```shell
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-2. Clone the repository to your machine in your place.
+1. Clone the repository to your machine in your place.
 ```shell
 git clone https://github.com/vuichka/game-of-life-rust.git
 ```
 
-3. Run
+2. Run
 ```shell
 cargo run --release
 ```
@@ -36,7 +36,7 @@ The games stops when you press on Pause logo. When paused you can draw and erase
 
 #### Spawning
 
-> Use https://conwaylife.com/patterns/
+Use https://conwaylife.com/patterns/
 
 - `H` - to spawn any from your clipboard on your mouse cursor
 - `1` - to spawn a glider on mouse cursor
