@@ -6,6 +6,7 @@ mod rle;
 
 use ::core::time;
 use consts::*;
+use copypasta::{ClipboardContext, ClipboardProvider};
 use game::*;
 use raylib_ui::*;
 use std::thread::sleep;
@@ -13,6 +14,9 @@ use std::thread::sleep;
 use raylib::prelude::*;
 
 fn main() {
+    // context for clipboard
+    let mut ctx = ClipboardContext::new().unwrap();
+
     let (mut rl, thread) = raylib::init()
         .size(SCREEN_WIDTH, SCREEN_HEIGHT)
         .title("Game-Of-Life-Rust")
@@ -23,23 +27,58 @@ fn main() {
         .unwrap();
 
     let mut game: Game = new_game(pause_btn);
-
     while !rl.window_should_close() {
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
+        // controls handlers
         if d.is_key_down(KeyboardKey::KEY_R) {
-            game.restart_game();
+            game.restart_game(true);
         }
+        if d.is_key_down(KeyboardKey::KEY_D) {
+            game.restart_game(false);
+        }
+        if d.is_key_down(KeyboardKey::KEY_P) {
+            game.pause = !game.pause;
+            sleep(time::Duration::from_millis(100));
+        }
+        press_drawing(&mut d, &mut game);
+        // controls handlers end
+
+        // set figures
+        if d.is_key_down(KeyboardKey::KEY_H) {
+            let (x, y) = (
+                (d.get_mouse_x() / CELL_WIDTH) as usize,
+                (d.get_mouse_y() / CELL_HEIGHT) as usize,
+            );
+            let buffer = ctx.get_contents().unwrap();
+            game.world.spawn_from_rle(buffer.as_str(), x, y);
+        }
+
+        if d.is_key_down(KeyboardKey::KEY_ONE) {
+            let (x, y) = (
+                (d.get_mouse_x() / CELL_WIDTH) as usize,
+                (d.get_mouse_y() / CELL_HEIGHT) as usize,
+            );
+            game.world.spawn_glider(x, y);
+        }
+
+        if d.is_key_down(KeyboardKey::KEY_TWO) {
+            let (x, y) = (
+                (d.get_mouse_x() / CELL_WIDTH) as usize,
+                (d.get_mouse_y() / CELL_HEIGHT) as usize,
+            );
+            game.world.spawn_gosper_glider(x, y);
+        }
+        // set figures end
 
         draw_grid(&mut d, &game);
         draw_pause_button(&mut d, &mut game);
-        press_drawing(&mut d, &mut game);
         change_draw_state(&mut d, &mut game);
 
         if !game.pause {
             game.world.next_state();
-            sleep(time::Duration::from_millis(100));
+            sleep(time::Duration::from_millis(REFRESH_MILLIS));
         }
     }
 }

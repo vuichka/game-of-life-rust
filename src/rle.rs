@@ -27,11 +27,12 @@ impl World {
             .filter(|el| !el.is_empty())
             .collect::<Vec<_>>()
             .join("");
-        println!("{:?}", rle.as_str());
         let mut figure = Rle::new(rle.as_str()).unwrap();
         match self.set_figure(&mut figure, x, y) {
             Ok(v) => v,
-            Err(e) => println!("{}", e),
+            Err(e) => {
+                println!("{}", e)
+            }
         };
     }
 

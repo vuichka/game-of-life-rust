@@ -1,4 +1,3 @@
-use raylib::ffi::{ceil, ceilf};
 use raylib::prelude::*;
 
 use crate::consts::*;
@@ -76,16 +75,6 @@ pub fn press_drawing(d: &mut RaylibDrawHandle, game: &mut Game) {
                 Rectangle::new(
                     (x.clone() as f32 - (draw_area / 2_f32)) * CELL_WIDTH as f32,
                     (y.clone() as f32 - (draw_area / 2_f32)) * CELL_HEIGHT as f32,
-                    draw_area * CELL_WIDTH as f32,
-                    draw_area * CELL_HEIGHT as f32,
-                ),
-                2,
-                Color::WHITE,
-            );
-            d.draw_rectangle_lines_ex(
-                Rectangle::new(
-                    (y / SCREEN_HEIGHT * CELL_HEIGHT) as f32,
-                    (x / SCREEN_WIDTH * CELL_WIDTH) as f32,
                     draw_area * CELL_WIDTH as f32,
                     draw_area * CELL_HEIGHT as f32,
                 ),

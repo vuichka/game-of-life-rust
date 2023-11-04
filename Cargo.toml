@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 ca-formats = "0.3.5"
+copypasta = "0.10.0"
 rand = "0.8.5"
 raylib = "3.7.0"
 rle = "0.2.0"
