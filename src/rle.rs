@@ -20,7 +20,6 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!";
 
 impl World {
     pub fn spawn_from_rle(&mut self, rle: &str, x: usize, y: usize) {
-        println!("{rle:?}");
         let rle = rle
             .trim()
             .split(" ")
@@ -57,9 +56,20 @@ impl World {
 
         let live_cells = fig.map(|cell| cell.unwrap().position).collect::<Vec<_>>();
 
-        for row in x..h.y as usize {
-            for el in y..h.x as usize {
-                self.cells[row][el] = false
+        for col in x..=(x + h.x as usize) {
+            for el in y..=(y + h.y as usize) {
+                let mut sx = (x + col) as i32;
+                let mut sy = (y + el) as i32;
+
+                if sx < 0 || sx >= self.width as i32 {
+                    sx = (sx as i32 + self.height as i32) % self.width as i32;
+                }
+
+                if sy < 0 || sy >= self.height as i32 {
+                    sy = (y as i32 + self.height as i32) % self.height as i32;
+                }
+
+                self.cells[sy as usize][sx as usize] = false;
             }
         }
 
@@ -67,14 +77,14 @@ impl World {
             let mut sx = (x as i64 + el.0) as i32;
             let mut sy = (y as i64 + el.1) as i32;
 
-            if sx < 0 || sx >= self.height as i32 {
-                sx = (sx as i32 + self.height as i32) % self.height as i32;
+            if sx < 0 || sx >= self.width as i32 {
+                sx = (sx as i32 + self.width as i32) % self.width as i32;
             }
 
-            if sy < 0 || sy >= self.width as i32 {
-                sy = (y as i32 + self.width as i32) % self.width as i32;
+            if sy < 0 || sy >= self.height as i32 {
+                sy = (y as i32 + self.height as i32) % self.height as i32;
             }
-
+            // println!("{x}, {y}| {sx}, {sy}| {} {}", h.x, h.y);
             self.cells[sy as usize][sx as usize] = true;
         }
 

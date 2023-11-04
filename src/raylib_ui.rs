@@ -77,7 +77,7 @@ pub fn press_drawing(d: &mut RaylibDrawHandle, game: &mut Game, erase_area: f32)
                 erase_area * CELL_WIDTH as f32,
                 erase_area * CELL_HEIGHT as f32,
             ),
-            1,
+            2,
             Color::WHITE,
         );
     }

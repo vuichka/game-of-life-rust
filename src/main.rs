@@ -59,6 +59,7 @@ fn main() {
             );
             let buffer = ctx.get_contents().unwrap();
             game.world.spawn_from_rle(buffer.as_str(), x, y);
+            sleep(time::Duration::from_millis(100));
         }
 
         if d.is_key_down(KeyboardKey::KEY_ONE) {
