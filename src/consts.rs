@@ -1,5 +1,5 @@
-pub const ROWS: i32 = 200;
-pub const COLS: i32 = 200;
+pub const ROWS: i32 = 100;
+pub const COLS: i32 = 100;
 pub const SCREEN_HEIGHT: i32 = 1000;
 pub const SCREEN_WIDTH: i32 = 1000;
 pub const CELL_WIDTH: i32 = SCREEN_WIDTH / COLS;

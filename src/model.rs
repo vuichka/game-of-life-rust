@@ -38,12 +38,12 @@ impl World {
         } else {
             for row in -area / 2..area / 2 {
                 for cell in -area / 2..area / 2 {
-                    if x as i32 + row >= 0
-                        && x as i32 + row < self.cells.len() as i32
-                        && y as i32 + cell >= 0
-                        && y as i32 + cell < self.cells[0].len() as i32
+                    if x as i32 + row >= area / 2
+                        && x as i32 + row < self.cells.len() as i32 - area / 2
+                        && y as i32 + cell >= area / 2
+                        && y as i32 + cell < self.cells[0].len() as i32 - area / 2
                     {
-                        self.cells[(x as i32 + row) as usize][(y as i32 + cell) as usize] = alive;
+                        self.cells[x + row as usize][y + cell as usize] = alive;
                     }
                 }
             }

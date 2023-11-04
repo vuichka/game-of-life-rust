@@ -64,16 +64,18 @@ impl World {
         }
 
         for el in live_cells {
-            let mut x = x + el.0 as usize;
-            let mut y = y + el.1 as usize;
-            if x > self.height {
-                x = (x + self.height) % self.height;
-            }
-            if y > self.width {
-                y = (y + self.width) % self.width;
+            let mut sx = (x as i64 + el.0) as i32;
+            let mut sy = (y as i64 + el.1) as i32;
+
+            if sx < 0 || sx >= self.height as i32 {
+                sx = (sx as i32 + self.height as i32) % self.height as i32;
             }
 
-            self.cells[y][x] = true;
+            if sy < 0 || sy >= self.width as i32 {
+                sy = (y as i32 + self.width as i32) % self.width as i32;
+            }
+
+            self.cells[sy as usize][sx as usize] = true;
         }
 
         Ok(())

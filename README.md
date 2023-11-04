@@ -32,4 +32,12 @@ The games stops when you press on Pause logo. When paused you can draw and erase
 - `P` - Pause/Unpause the game
 - `M` - switch drawer to brush/eraser
 
+#### Spawning
+
+> Use https://conwaylife.com/patterns/
+
+- `H` - to spawn any from your clipboard on your mouse cursor
+- `1` - to spawn a glider on mouse cursor
+- `2` - to spawn a Gosper glider gun.
+
 > If you have any other keyboard layout than qwerty, please press qwerty keys. It's hardcoded.

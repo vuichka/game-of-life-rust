@@ -62,28 +62,30 @@ pub fn draw_pause_button(d: &mut RaylibDrawHandle, game: &mut Game) {
 }
 
 pub fn press_drawing(d: &mut RaylibDrawHandle, game: &mut Game) {
-    if d.is_mouse_button_down(MouseButton::MOUSE_LEFT_BUTTON) {
-        let (mut x, mut y) = (d.get_mouse_x(), d.get_mouse_y());
+    let (mut x, mut y) = (d.get_mouse_x(), d.get_mouse_y());
 
-        x = x / CELL_WIDTH;
-        y = y / CELL_HEIGHT;
+    let draw_area = 3.;
+    x = x / CELL_WIDTH;
+    y = y / CELL_HEIGHT;
+    if d.is_mouse_button_down(MouseButton::MOUSE_LEFT_BUTTON) {
         if game.draw_state == true {
             game.world.set(y as usize, x as usize, game.draw_state, 1);
         } else {
-            let draw_area = 3.;
-            d.draw_rectangle_lines_ex(
-                Rectangle::new(
-                    (x.clone() as f32 - (draw_area / 2_f32)) * CELL_WIDTH as f32,
-                    (y.clone() as f32 - (draw_area / 2_f32)) * CELL_HEIGHT as f32,
-                    draw_area * CELL_WIDTH as f32,
-                    draw_area * CELL_HEIGHT as f32,
-                ),
-                2,
-                Color::WHITE,
-            );
             game.world
                 .set(y as usize, x as usize, game.draw_state, draw_area as i32)
         }
+    }
+    if !game.draw_state {
+        d.draw_rectangle_lines_ex(
+            Rectangle::new(
+                (x.clone() as f32 - (draw_area / 2_f32)) * CELL_WIDTH as f32,
+                (y.clone() as f32 - (draw_area / 2_f32)) * CELL_HEIGHT as f32,
+                draw_area * CELL_WIDTH as f32,
+                draw_area * CELL_HEIGHT as f32,
+            ),
+            3,
+            Color::WHITE,
+        );
     }
 }
 
