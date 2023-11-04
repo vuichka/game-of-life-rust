@@ -1,6 +1,8 @@
 # Game Of Life Rust learning project
 
-I managed to build a game while learning several programming languages, one of them is rust. You can check what a got after a few weeks here.
+[In English]("README.md") | [На Русском]("/src/strtic/ruREADME.md")
+
+I managed to build a game while learning several programming languages, one of them is rust. You can check what a got after a couple of weeks learning here.
 
 ## Usage 
 
