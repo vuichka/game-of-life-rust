@@ -1,5 +1,4 @@
-const ALIVE_SYM: &str = "•";
-const DEAD_SYM: &str = ".";
+use crate::consts::*;
 
 #[derive(Debug)]
 pub struct World {
@@ -33,10 +32,26 @@ impl World {
         self
     }
 
-    pub fn set(&mut self, x: usize, y: usize, alive: bool) {
-        self.cells[x][y] = alive;
+    pub fn set(&mut self, x: usize, y: usize, alive: bool, area: i32) {
+        if area == 1 {
+            self.cells[x][y] = alive;
+        } else {
+            for row in -area / 2..area / 2 {
+                for cell in -area / 2..area / 2 {
+                    if x as i32 + row >= 0
+                        && x as i32 + row < self.cells.len() as i32
+                        && y as i32 + cell >= 0
+                        && y as i32 + cell < self.cells[0].len() as i32
+                    {
+                        self.cells[(x as i32 + row) as usize][(y as i32 + cell) as usize] = alive;
+                    }
+                }
+            }
+        }
     }
 
+    // used for shell printing
+    #[allow(dead_code)]
     pub fn print_world(&self) {
         for row in 0..self.height {
             for e in 0..self.width {
