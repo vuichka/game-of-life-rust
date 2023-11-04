@@ -1,3 +1,6 @@
+use std::thread::sleep;
+use std::time;
+
 use raylib::prelude::*;
 
 use crate::consts::*;
@@ -61,36 +64,37 @@ pub fn draw_pause_button(d: &mut RaylibDrawHandle, game: &mut Game) {
     }
 }
 
-pub fn press_drawing(d: &mut RaylibDrawHandle, game: &mut Game) {
+pub fn press_drawing(d: &mut RaylibDrawHandle, game: &mut Game, erase_area: f32) {
     let (mut x, mut y) = (d.get_mouse_x(), d.get_mouse_y());
 
-    let draw_area = 3.;
     x = x / CELL_WIDTH;
     y = y / CELL_HEIGHT;
+    if !game.draw_state {
+        d.draw_rectangle_lines_ex(
+            Rectangle::new(
+                x as f32 * CELL_WIDTH as f32 - (erase_area / 2_f32 * CELL_WIDTH as f32),
+                y as f32 * CELL_HEIGHT as f32 - (erase_area / 2_f32 * CELL_HEIGHT as f32),
+                erase_area * CELL_WIDTH as f32,
+                erase_area * CELL_HEIGHT as f32,
+            ),
+            1,
+            Color::WHITE,
+        );
+    }
+
     if d.is_mouse_button_down(MouseButton::MOUSE_LEFT_BUTTON) {
         if game.draw_state == true {
             game.world.set(y as usize, x as usize, game.draw_state, 1);
         } else {
             game.world
-                .set(y as usize, x as usize, game.draw_state, draw_area as i32)
+                .set(y as usize, x as usize, game.draw_state, erase_area as i32)
         }
-    }
-    if !game.draw_state {
-        d.draw_rectangle_lines_ex(
-            Rectangle::new(
-                (x.clone() as f32 - (draw_area / 2_f32)) * CELL_WIDTH as f32,
-                (y.clone() as f32 - (draw_area / 2_f32)) * CELL_HEIGHT as f32,
-                draw_area * CELL_WIDTH as f32,
-                draw_area * CELL_HEIGHT as f32,
-            ),
-            3,
-            Color::WHITE,
-        );
     }
 }
 
 pub fn change_draw_state(d: &mut RaylibDrawHandle, game: &mut Game) {
     if d.is_key_pressed(KeyboardKey::KEY_M) {
         game.draw_state = !game.draw_state;
+        sleep(time::Duration::from_millis(100));
     }
 }

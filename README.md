@@ -29,7 +29,7 @@ The games stops when you press on Pause logo. When paused you can draw and erase
 
 - `R` - random field restart
 - `D` - dead field restart
-- `P` - Pause/Unpause the game
+- `P` or `SPACE` - Pause/Unpause the game
 - `M` - switch drawer to brush/eraser
 
 #### Spawning

@@ -26,23 +26,29 @@ fn main() {
         .load_texture(&thread, "src/static/pause_btn.png")
         .unwrap();
 
+    let erase_area = 4.;
+
     let mut game: Game = new_game(pause_btn);
     while !rl.window_should_close() {
         let mut d = rl.begin_drawing(&thread);
         d.clear_background(Color::WHITE);
 
+        draw_grid(&mut d, &game);
+        change_draw_state(&mut d, &mut game);
+        draw_pause_button(&mut d, &mut game);
+
         // controls handlers
+        press_drawing(&mut d, &mut game, erase_area);
         if d.is_key_down(KeyboardKey::KEY_R) {
             game.restart_game(true);
         }
         if d.is_key_down(KeyboardKey::KEY_D) {
             game.restart_game(false);
         }
-        if d.is_key_down(KeyboardKey::KEY_P) {
+        if d.is_key_down(KeyboardKey::KEY_P) || d.is_key_down(KeyboardKey::KEY_SPACE) {
             game.pause = !game.pause;
             sleep(time::Duration::from_millis(100));
         }
-        press_drawing(&mut d, &mut game);
         // controls handlers end
 
         // set figures
@@ -71,10 +77,6 @@ fn main() {
             game.world.spawn_gosper_glider(x, y);
         }
         // set figures end
-
-        draw_grid(&mut d, &game);
-        draw_pause_button(&mut d, &mut game);
-        change_draw_state(&mut d, &mut game);
 
         if !game.pause {
             game.world.next_state();
