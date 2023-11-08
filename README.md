@@ -4,6 +4,8 @@
 
 I managed to build a game while learning several programming languages, one of them is rust. You can check what a got after a couple of weeks learning here.
 
+![demo](/src/static/democ.mp4)
+
 ## Usage 
 
 0. If you don't have Rust Programming Language installed, please go [here](https://www.rust-lang.org/tools/install) and install it, or use this if you’re running **macOS**, **Linux**, or another **Unix-like OS**:
