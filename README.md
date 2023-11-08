@@ -4,7 +4,7 @@
 
 I managed to build a game while learning several programming languages, one of them is rust. You can check what a got after a couple of weeks learning here.
 
-![demo](/src/static/democ.mp4)
+![demo](/src/static/demo.gif)
 
 ## Usage 
 
